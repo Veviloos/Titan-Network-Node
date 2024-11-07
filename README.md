@@ -59,7 +59,6 @@ docker exec -it * /bin/bash
 Get your Identity Code Here: 
 https://test1.titannet.io/intiveRegister?code=ndTnzz
 Register Use My Ref Code: ndTnzz
-Log In 
 - Go to Node Management
 - Get Identity Code
 
