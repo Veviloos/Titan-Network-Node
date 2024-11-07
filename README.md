@@ -34,6 +34,12 @@ sudo groupadd docker
 sudo usermod -aG docker $USER
 ```
 
+Increase Buffer Size
+```bash
+sysctl -w net.core.rmem_max=7500000
+sysctl -w net.core.wmem_max=7500000
+```
+
 ## Step 1: Download the Image:
 ```bash
 sudo apt update
