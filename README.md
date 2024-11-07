@@ -58,9 +58,10 @@ docker exec -it * /bin/bash
 ## Step 5: Bind the applied
 Get your Identity Code Here: 
 https://test1.titannet.io/intiveRegister?code=ndTnzz
-Register & Log In 
-> Go to Node Management
-> Get Identity Code
+Register Use My Ref Code: ndTnzz
+Log In 
+- Go to Node Management
+- Get Identity Code
 
 - Replace your-hash-here with your identity code. 
 ```bash
