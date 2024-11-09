@@ -94,11 +94,27 @@ EOF
 
     chmod +x "$device_dir/entrypoint.sh"
 
-    # Build and run Docker container
+    # Build the Docker image
     docker build -t "titan_edge_docker_$device_name" "$device_dir"
-    docker run -d --cap-add=NET_ADMIN -v "$device_dir/redsocks.conf:/etc/redsocks.conf" \
-    -v "$device_dir/entrypoint.sh:/entrypoint.sh" --name "$device_name" \
-    "titan_edge_docker_$device_name" /entrypoint.sh
 
-    echo -e "${SUCCESS}Titan Edge instance $i ($device_name) has been set up successfully.${NC}"
+    # Run the Docker container
+    echo -e "${INFO}Running Titan Edge container for $device_name...${NC}"
+    mkdir -p ~/.titanedge  # Create the titanedge directory if it doesn't exist
+    docker run -d -v ~/.titanedge:/root/.titanedge --cap-add=NET_ADMIN \
+        --name "$device_name" "titan_edge_docker_$device_name"
+
+    # Execute the binding command for the instance
+    echo -e "${INFO}Titan Edge instance $device_name has been set up. Now binding to the network...${NC}"
+
+    # Enter the Docker container and get the hash code
+    docker exec -it "$device_name" bash -c "titan-edge identity-code"
+
+    # Prompt for the hash code to bind the device
+    read -p "Enter your Identity Code (you can get it from the website): " identity_code
+    read -p "Enter your device hash: " device_hash
+
+    # Bind the device using the provided hash
+    docker exec -it "$device_name" bash -c "titan-edge bind --hash=$device_hash https://api-test1.container1.titannet.io/api/v2/device/binding"
+
+    echo -e "${SUCCESS}Titan Edge instance $device_name has been bound to the network with hash $device_hash.${NC}"
 done
