@@ -1,56 +1,54 @@
 #!/bin/bash
 
-# Update system and install Docker if not present
-echo "Updating system packages..."
-sudo apt update -y
+# Define color codes
+INFO='\033[0;36m'  # Cyan
+BANNER='\033[0;35m' # Magenta
+WARNING='\033[0;33m'
+ERROR='\033[0;31m'
+SUCCESS='\033[0;32m'
+NC='\033[0m' # No Color
 
-if ! command -v docker &> /dev/null; then
-    echo "Docker not found, installing..."
-    sudo apt install -y docker.io
-    sudo systemctl start docker
-    sudo systemctl enable docker
-else
-    echo "Docker is already installed."
-fi
+# Display banner
+echo -e "${BANNER}=========================================================================${NC}"
+echo -e "${BANNER}               Titan Edge Docker Setup Script v1.0                        ${NC}"
+echo -e "${BANNER}=========================================================================${NC}"
 
-# Titan Edge Docker image
-docker pull nezha123/titan-edge
+# Ask for the number of Titan Edge instances
+read -p "How many Titan Edge instances would you like to create? " instance_count
 
-# Prompt for number of instances
-read -p "How many Titan Edge instances would you like to create? " num_instances
+# Loop through the instances
+for i in $(seq 1 "$instance_count"); do
+    echo -e "${INFO}Configuring Titan Edge instance $i:${NC}"
 
-# Loop to create instances with individual proxies
-for ((i=1; i<=num_instances; i++)); do
-    echo -e "\nConfiguring proxy for Titan Edge instance $i:"
-    read -p "Enter proxy in format IP:PORT:USERNAME:PASSWORD: " proxy_input
-    IFS=':' read -r proxy_ip proxy_port proxy_user proxy_password <<< "$proxy_input"
+    # Prompt for device name
+    device_name=$(get_non_empty_input "Enter a unique device name for instance $i: ")
 
-    # Create a unique directory for each instance
-    instance_dir="$HOME/.titanedge_instance_$i"
-    mkdir -p "$instance_dir"
+    # Create a directory for this device's configuration
+    device_dir="./$device_name"
+    if [ ! -d "$device_dir" ]; then
+        mkdir "$device_dir"
+        echo -e "${INFO}Created directory for $device_name at $device_dir${NC}"
+    fi
 
-    # Create Dockerfile with `redsocks` setup for the proxy
-    cat <<EOL > "$instance_dir/Dockerfile"
-FROM ubuntu:latest
+    # Proxy configuration for each instance
+    echo "Configuring proxy for Titan Edge instance $i:"
+    read -p "Enter proxy in format IP:PORT:USERNAME:PASSWORD: " proxy_details
+    proxy_ip=$(echo $proxy_details | cut -d':' -f1)
+    proxy_port=$(echo $proxy_details | cut -d':' -f2)
+    proxy_username=$(echo $proxy_details | cut -d':' -f3)
+    proxy_password=$(echo $proxy_details | cut -d':' -f4)
+
+    # Generate Dockerfile
+    echo -e "${INFO}Creating Dockerfile for $device_name...${NC}"
+    cat <<EOF > "$device_dir/Dockerfile"
+FROM nezha123/titan-edge
 WORKDIR /app
-RUN apt-get update && apt-get install -y bash curl jq redsocks iptables iproute2
+EOF
 
-# Add Titan Edge binary
-RUN curl -L https://github.com/nezha123/titan-edge/releases/download/v1.0/titan-edge -o /usr/local/bin/titan-edge && chmod +x /usr/local/bin/titan-edge
-
-# Copy redsocks configuration and entrypoint
-COPY redsocks.conf /etc/redsocks.conf
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
-# Set the entrypoint to start redsocks and configure iptables
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-EOL
-
-    # Create redsocks.conf with user proxy details
-    cat <<EOL > "$instance_dir/redsocks.conf"
+    # Create and configure redsocks if a proxy is used
+    cat <<EOF > "$device_dir/redsocks.conf"
 base {
-    log_debug = on;
+    log_debug = off;
     log_info = on;
     log = "file:/var/log/redsocks.log";
     daemon = on;
@@ -63,31 +61,28 @@ redsocks {
     ip = $proxy_ip;
     port = $proxy_port;
     type = http-connect;
-    login = "$proxy_user";
+    login = "$proxy_username";
     password = "$proxy_password";
 }
-EOL
+EOF
 
-    # Create entrypoint script for iptables configuration
-    cat << 'EOL' > "$instance_dir/entrypoint.sh"
+    # Entrypoint script for redsocks
+    cat <<EOF > "$device_dir/entrypoint.sh"
 #!/bin/sh
-echo "Starting redsocks..."
 redsocks -c /etc/redsocks.conf &
 sleep 5
-
-echo "Configuring iptables..."
 iptables -t nat -A OUTPUT -p tcp --dport 80 -j REDIRECT --to-ports 12345
 iptables -t nat -A OUTPUT -p tcp --dport 443 -j REDIRECT --to-ports 12345
+exec "\$@"
+EOF
 
-echo "Starting Titan Edge..."
-exec titan-edge
-EOL
+    chmod +x "$device_dir/entrypoint.sh"
 
-    # Build and run the Docker container with proxy
-    docker build -t "titan_edge_instance_$i" "$instance_dir"
-    docker run -d --name "titan_edge_instance_$i" -v "$instance_dir:/root/.titanedge" --cap-add=NET_ADMIN "titan_edge_instance_$i"
-    
-    echo "Titan Edge instance $i started with proxy $proxy_ip:$proxy_port."
+    # Build and run Docker container
+    docker build -t "titan_edge_docker_$device_name" "$device_dir"
+    docker run -d --cap-add=NET_ADMIN -v "$device_dir/redsocks.conf:/etc/redsocks.conf" \
+    -v "$device_dir/entrypoint.sh:/entrypoint.sh" --name "$device_name" \
+    "titan_edge_docker_$device_name" /entrypoint.sh
+
+    echo -e "${SUCCESS}Titan Edge instance $i ($device_name) has been set up successfully.${NC}"
 done
-
-echo -e "\nAll requested Titan Edge instances have been created and started with individual proxy settings!"
