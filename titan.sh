@@ -13,6 +13,19 @@ echo -e "${BANNER}==============================================================
 echo -e "${BANNER}               Titan Edge Docker Setup Script v1.0                        ${NC}"
 echo -e "${BANNER}=========================================================================${NC}"
 
+# Function to ensure a non-empty value
+get_non_empty_input() {
+    local prompt="$1"
+    local input=""
+    while [ -z "$input" ]; do
+        read -p "$prompt" input
+        if [ -z "$input" ]; then
+            echo -e "${ERROR}Error: This field cannot be empty.${NC}"
+        fi
+    done
+    echo "$input"
+}
+
 # Ask for the number of Titan Edge instances
 read -p "How many Titan Edge instances would you like to create? " instance_count
 
@@ -22,6 +35,9 @@ for i in $(seq 1 "$instance_count"); do
 
     # Prompt for device name
     device_name=$(get_non_empty_input "Enter a unique device name for instance $i: ")
+    if [ -z "$device_name" ]; then
+        device_name="instance_$i"
+    fi
 
     # Create a directory for this device's configuration
     device_dir="./$device_name"
