@@ -1,8 +1,5 @@
 # Titan-Network-Node (DOCKER Installation)
 
-- You must need to buy a VPS for running Allora Worker
-- You can buy from : Contabo
-- You should buy VPS which is fulfilling all these requirements : 
 ```bash
 Operating System : Ubuntu 22.04
 CPU: Minimum of 1/2 core.
