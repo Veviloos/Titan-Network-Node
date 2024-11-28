@@ -35,7 +35,7 @@ You'll need to set up a few configuration files for the bot to work properly.
 
 {% code title="run command:" %}
 ```
-nano configs.json
+nano configs.json 
 ```
 {% endcode %}
 
@@ -59,11 +59,29 @@ nano datas.txt
 ```
 {% endcode %}
 
+{% hint style="info" %}
+Open MeshChain Dashboard, turn on devtool by F12 or Ctrl + Shift + I, copy all the Authorization value except Bearer from tab like the picture. [Click Here](https://t.me/KeoAirDropFreeNe/257/16137)
+{% endhint %}
+
 {% code title="Sample:" %}
 ```
 ey...
 ey...
 ey...
+```
+{% endcode %}
+
+**Edit datas2.txt**
+
+{% hint style="info" %}
+Get info here: [Click Me](https://t.me/KeoAirDropFreeNe/257/6879)
+{% endhint %}
+
+{% code title="Sample:" %}
+```
+query_id.../user...
+query_id.../user...
+query_id.../user...
 ```
 {% endcode %}
 
