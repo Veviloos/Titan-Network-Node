@@ -15,7 +15,7 @@ Use this code at your own risk.
 {% code title="run command" %}
 ```
 git clone https://github.com/MeoMunDep/MeshChain.git
-cd MeshChain
+cd MeshChain/MeshChain
 ```
 {% endcode %}
 
