@@ -25,6 +25,8 @@ cd MeshChain
 npm i user-agents axios colors p-limit https-proxy-agent socks-proxy-agent crypto ws uuid
 ```
 
+***
+
 **Prepare Configuration Files:**
 
 {% hint style="info" %}
@@ -51,6 +53,8 @@ nano configs.json
 }
 ```
 
+***
+
 **Edit datas.txt**
 
 {% code title="run command" %}
@@ -71,6 +75,8 @@ ey...
 ```
 {% endcode %}
 
+***
+
 **Edit datas2.txt**
 
 {% hint style="info" %}
@@ -84,6 +90,8 @@ query_id.../user...
 query_id.../user...
 ```
 {% endcode %}
+
+***
 
 **Edit proxies.txt**
 
@@ -105,6 +113,8 @@ socks4://user:password@host:port
 socks5://user:password@host:port
 ```
 {% endcode %}
+
+***
 
 **Run MeshChain Bot:**
 
