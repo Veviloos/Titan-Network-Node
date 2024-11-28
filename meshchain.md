@@ -1,9 +1,6 @@
----
-description: '# Disclaimer'
----
-
 # MeshChain
 
+DISCLAIMER!\
 This project includes code that is related to encryption. By using this code, you acknowledge the following:
 
 * The encryption methods and algorithms implemented here are provided for educational purposes only.
@@ -35,6 +32,12 @@ You'll need to set up a few configuration files for the bot to work properly.
 {% endhint %}
 
 **Configuration Files:**
+
+{% code title="run command:" %}
+```
+nano configs.json
+```
+{% endcode %}
 
 ```
 {
