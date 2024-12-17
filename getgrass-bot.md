@@ -36,14 +36,26 @@ I am not responsible for any loss or damage caused by this bot. Use it at your o
 
 #### **One-Click Installation Script**
 
-```
-wget https://raw.githubusercontent.com/Pheanhutz/omsim/refs/heads/main/install_getgrass.sh
-```
+1.  Install screen:
 
-```
-chmod +x install_getgrass.sh
-./install_getgrass.sh
-```
+    ```
+    apt install screen 
+    ```
+2.  Create screen:
+
+    ```
+    screen -S getgrassbot
+    ```
+3.  Clone this file to your local machine:
+
+    ```
+    wget https://raw.githubusercontent.com/Pheanhutz/omsim/refs/heads/main/install_getgrass.sh
+    ```
+4. Execute script:
+   * ```
+     chmod +x install_getgrass.sh
+     ./install_getgrass.sh
+     ```
 
 ***
 
