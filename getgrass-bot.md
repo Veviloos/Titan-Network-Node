@@ -56,6 +56,9 @@ I am not responsible for any loss or damage caused by this bot. Use it at your o
      chmod +x install_getgrass.sh
      ./install_getgrass.sh
      ```
+5.  After successful install <mark style="color:green;">`ctrl A+D`</mark> to exit screen.
+
+
 
 ***
 
