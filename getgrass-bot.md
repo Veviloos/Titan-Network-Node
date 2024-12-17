@@ -32,8 +32,6 @@ I am not responsible for any loss or damage caused by this bot. Use it at your o
 
 ***
 
-***
-
 ### 🤔 Let's start:
 
 #### **One-Click Installation Script**
