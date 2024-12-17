@@ -124,4 +124,6 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 ### Contribution
 
-If you find this project useful, please consider giving it a star on GitHub! Your support motivates further development and enhancements.
+If you find this project useful, please consider giving it a star on GitHub! Your support motivates further development and enhancements.\
+\
+Credits to <mark style="color:orange;">Furqonflynn</mark>&#x20;
