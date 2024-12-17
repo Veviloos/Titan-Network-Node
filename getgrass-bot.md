@@ -87,7 +87,7 @@ SetUp on `Config.js`
 4.  Start the bot:
 
     ```
-    npm install
+    npm start
     ```
 
 ### Buy Me Coffee:
