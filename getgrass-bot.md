@@ -6,7 +6,44 @@ This repository contains the code for `getgrass-bot`, a bot designed to establis
 I am not responsible for any loss or damage caused by this bot. Use it at your own risk.
 {% endhint %}
 
-### Manual Installation
+### Option1: Automatic Installation
+
+1. **Script Features**:
+   * Installs Node.js.
+   * Clones the repository.
+   * Installs dependencies.
+   * Configures `config.js` and `proxy.txt`.
+   * Starts the bot with a provided password.
+2. **User Inputs**:
+   * User ID (`UserId`).&#x20;
+     1. Obtain your user ID from the Getgrass website:
+        * Visit [https://app.getgrass.io/dashboard](https://app.getgrass.io/register/?referralCode=NXZg3yAsUsXKzy2).
+        * Open your browser's developer tools (usually by pressing F12 or right-clicking and selecting "Inspect").
+        * Go to the "Console" tab.
+        *   Paste the following command and press Enter:
+
+            ```
+            localStorage.getItem('userId');
+            ```
+        * Copy the value returned, which is your user ID.
+   * Proxies (in a specific format).
+3. **Implementation**:
+   * Save the script below as `install_getgrass.sh`
+
+#### **One-Click Installation Script**
+
+```
+wget https://raw.githubusercontent.com/Pheanhutz/omsim/refs/heads/main/install_getgrass.sh
+```
+
+```
+chmod +x install_getgrass.sh
+./install_getgrass.sh
+```
+
+***
+
+### Option2: Manual Installation
 
 install nodejs curl -fssL [https://deb.nodesource.com/setup\_19.x](https://deb.nodesource.com/setup_19.x) | sudo -E bash sudo apt install -y nodejs
 
