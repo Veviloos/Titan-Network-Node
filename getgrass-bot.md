@@ -30,6 +30,12 @@ I am not responsible for any loss or damage caused by this bot. Use it at your o
 3. **Implementation**:
    * Save the script below as `install_getgrass.sh`
 
+***
+
+***
+
+### 🤔 Let's start:
+
 #### **One-Click Installation Script**
 
 ```
@@ -40,6 +46,8 @@ wget https://raw.githubusercontent.com/Pheanhutz/omsim/refs/heads/main/install_g
 chmod +x install_getgrass.sh
 ./install_getgrass.sh
 ```
+
+***
 
 ***
 
