@@ -70,7 +70,7 @@ docker exec -it * /bin/bash
 
 ### Step 5: Bind the applied
 
-Get your Identity Code Here: https://test1.titannet.io/intiveRegister?code=ndTnzz Register Use My Ref Code: ndTnzz
+Get your Identity Code Here: https://test1.titannet.io/intiveRegister?code=ndTnzz Register Use My Ref Code: QatNXO
 
 * Go to Node Management
 * Get Identity Code
